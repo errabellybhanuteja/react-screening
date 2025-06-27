@@ -17,7 +17,7 @@ export function AppLayout({
 }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <div className="flex flex-col min-h-screen">
+      <div className="bg-purple-950 text-white min-h-screen p-4">
         <AppHeader links={links} />
         <main className="flex-grow container mx-auto p-4">
           <ClusterChecker>

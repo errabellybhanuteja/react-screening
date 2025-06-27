@@ -88,36 +88,34 @@ export function AccountTokens({ address }: { address: Address }) {
   }, [query.data, showAll])
 
   return (
-    <div className="space-y-2">
-      <div className="justify-between">
-        <div className="flex justify-between">
-          <h2 className="text-2xl font-bold">Token Accounts</h2>
-          <div className="space-x-2">
-            {query.isLoading ? (
-              <span className="loading loading-spinner"></span>
-            ) : (
-              <Button
-                variant="outline"
-                onClick={async () => {
-                  await query.refetch()
-                  await client.invalidateQueries({
-                    queryKey: ['getTokenAccountBalance'],
-                  })
-                }}
-              >
-                <RefreshCw size={16} />
-              </Button>
-            )}
-          </div>
-        </div>
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold">Token Holdings & Assets</h2>
+        {query.isLoading ? (
+          <span className="loading loading-spinner"></span>
+        ) : (
+          <Button
+            variant="outline"
+            onClick={async () => {
+              await query.refetch()
+              await client.invalidateQueries({
+                queryKey: ['getTokenAccountBalance'],
+              })
+            }}
+          >
+            <RefreshCw size={16} />
+          </Button>
+        )}
       </div>
+
       {query.isError && <pre className="alert alert-error">Error: {query.error?.message.toString()}</pre>}
+
       {query.isSuccess && (
-        <div>
+        <div className="overflow-x-auto rounded-lg border max-w-full">
           {query.data.length === 0 ? (
-            <div>No token accounts found.</div>
+            <div className="text-center py-4">No token accounts found.</div>
           ) : (
-            <Table>
+            <Table className="min-w-[650px]">
               <TableHeader>
                 <TableRow>
                   <TableHead>Public Key</TableHead>
@@ -128,32 +126,23 @@ export function AccountTokens({ address }: { address: Address }) {
               <TableBody>
                 {items?.map(({ account, pubkey }) => (
                   <TableRow key={pubkey.toString()}>
-                    <TableCell>
-                      <div className="flex space-x-2">
-                        <span className="font-mono">
-                          <ExplorerLink label={ellipsify(pubkey.toString())} address={pubkey.toString()} />
-                        </span>
-                      </div>
+                    <TableCell className="font-mono">
+                      <ExplorerLink label={ellipsify(pubkey.toString())} address={pubkey.toString()} />
                     </TableCell>
-                    <TableCell>
-                      <div className="flex space-x-2">
-                        <span className="font-mono">
-                          <ExplorerLink
-                            label={ellipsify(account.data.parsed.info.mint)}
-                            address={account.data.parsed.info.mint.toString()}
-                          />
-                        </span>
-                      </div>
+                    <TableCell className="font-mono">
+                      <ExplorerLink
+                        label={ellipsify(account.data.parsed.info.mint)}
+                        address={account.data.parsed.info.mint.toString()}
+                      />
                     </TableCell>
-                    <TableCell className="text-right">
-                      <span className="font-mono">{account.data.parsed.info.tokenAmount.uiAmount}</span>
+                    <TableCell className="text-right font-mono">
+                      {account.data.parsed.info.tokenAmount.uiAmount}
                     </TableCell>
                   </TableRow>
                 ))}
-
                 {(query.data?.length ?? 0) > 5 && (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center">
+                    <TableCell colSpan={3} className="text-center">
                       <Button variant="outline" onClick={() => setShowAll(!showAll)}>
                         {showAll ? 'Show Less' : 'Show All'}
                       </Button>

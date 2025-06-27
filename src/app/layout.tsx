@@ -14,7 +14,7 @@ const links: { label: string; path: string }[] = [{ label: 'Home', path: '/' }]
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`antialiased`}>
+      <body className="antialiased min-h-screen w-full bg-white text-black overflow-x-auto">
         <AppProviders>
           <AppLayout links={links}>{children}</AppLayout>
         </AppProviders>
@@ -22,6 +22,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   )
 }
+
 // Patch BigInt so we can log it using JSON.stringify without any errors
 declare global {
   interface BigInt {
