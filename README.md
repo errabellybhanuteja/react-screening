@@ -1,3 +1,20 @@
+
+![Screenshot 2025-06-27 125514](https://github.com/user-attachments/assets/03411cc7-94cf-44bb-a0ce-df2216ea3410)
+
+
+
+
+
+
+![Screenshot 2025-06-27 125532](https://github.com/user-attachments/assets/88b9e82f-06a4-488c-ba31-b7dfa8327f37)
+
+
+
+
+
+
+
+
 # 🎯 React/Solana Developer Screening Challenge
 
 ## Overview
